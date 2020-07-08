@@ -17,23 +17,23 @@ socketio = SocketIO(app)
 
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
-    mqtt.subscribe('sensorpi/log')
+   mqtt.subscribe('sensorpi/log')
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
-    data = dict(
-        topic=message.topic,
-        payload=message.payload.decode()
-    )
-    # emit a mqtt_message event to the socket containing the message data
-    socketio.emit('mqtt_message', data=data)
+   data = {
+      'topic': message.topic,
+      'payload': message.payload.decode()
+   }
+   # emit a mqtt_message event to the socket containing the message data
+   socketio.emit('mqtt_message', data=data)
 
 @app.route('/')
 def index():
-    return render_template('graph.html')
+   return render_template('graph.html')
 
 @mqtt.on_log()
 def handle_logging(client, userdata, level, buf):
-    print(level, buf)
+   print(level, buf)
 
 socketio.run(app, host='localhost', port=5000, use_reloader=True, debug=True)
