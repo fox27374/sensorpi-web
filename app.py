@@ -23,7 +23,8 @@ def signup():
     if form.validate_on_submit():
         data = form.sensorPiInterface.data
         return render_template('data.html', data=data)
-    return render_template('configForm.html', form=form)
+    #return render_template('configForm.html', form=form)
+    return render_template('test.html')
 
 @app.route("/restart/", methods=['POST'])
 def restart():

@@ -36,4 +36,4 @@ def index():
 def handle_logging(client, userdata, level, buf):
    print(level, buf)
 
-socketio.run(app, host='localhost', port=5000, use_reloader=True, debug=True)
+socketio.run(app, host='10.140.61.20', port=5000, use_reloader=True, debug=True)
