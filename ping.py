@@ -17,12 +17,8 @@ socketio = SocketIO(app)
 
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
-    mqtt.subscribe('#')
-    data = dict(
-        topic=message.topic,
-        payload=message.payload.decode()
-    )
-    socketio.emit('mqtt_message', data=data)
+    mqtt.subscribe('sensorpi/log')
+    mqtt.subscribe('sensorpi/comm')
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):

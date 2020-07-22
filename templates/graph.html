@@ -15,15 +15,15 @@
     // when a new message is received, log and append the data to the page
     socket.on('mqtt_message', function(data) {
       console.log(data);
-      var text = data['payload'];
-      if (text == 'True') {
+      var mqttData = JSON.parse(data['payload']);
+      if (mqttData.status == 'true') {
         $('#subscribe_messages').attr('class', 'alert alert-success');
         
-        $('#subscribe_messages').text(text);
+        $('#subscribe_messages').text(mqttData.status);
       }
       else {
         $('#subscribe_messages').attr('class', 'alert alert-danger');
-        $('#subscribe_messages').text(text);
+        $('#subscribe_messages').text(mqttData.status);
       }
         
     })
