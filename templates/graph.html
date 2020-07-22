@@ -16,7 +16,8 @@
     socket.on('mqtt_message', function(data) {
       console.log(data);
       var mqttData = JSON.parse(data['payload']);
-      if (mqttData.status == 'true') {
+
+      if (mqttData.status == 'True') {
         $('#subscribe_messages').attr('class', 'alert alert-success');
         
         $('#subscribe_messages').text(mqttData.status);
