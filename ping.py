@@ -18,6 +18,11 @@ socketio = SocketIO(app)
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
     mqtt.subscribe('#')
+    data = dict(
+        topic=message.topic,
+        payload=message.payload.decode()
+    )
+    socketio.emit('mqtt_message', data=data)
 
 @mqtt.on_message()
 def handle_mqtt_message(client, userdata, message):
@@ -27,6 +32,7 @@ def handle_mqtt_message(client, userdata, message):
     )
     # emit a mqtt_message event to the socket containing the message data
     socketio.emit('mqtt_message', data=data)
+    print(data['payload'])
 
 @app.route('/')
 def index():

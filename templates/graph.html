@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+	  <title>SensorPi</title>
+	  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    </head>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -9,9 +16,65 @@
     socket.on('mqtt_message', function(data) {
       console.log(data);
       var text = data['payload'];
-      $('#subscribe_messages').append(text + '<br>');
+      if (text == 'True') {
+        $('#subscribe_messages').attr('class', 'alert alert-success');
+        
+        $('#subscribe_messages').text(text);
+      }
+      else {
+        $('#subscribe_messages').attr('class', 'alert alert-danger');
+        $('#subscribe_messages').text(text);
+      }
+        
     })
   });
 </script>
-
-<div id="subscribe_messages"></div>
+<body>
+  <table class="table">
+    <h1>Status</h1>
+      <thead>
+        <tr>
+          <th scope="col">Service</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sensor</td>
+          <td><span class="badge badge-success" id=subscribe_messages></span></td>
+          <td>
+            <form action="/restart/" method="post">
+            <button class="btn btn-dark" name="Restart" type="submit">Restart</button>
+        </form></td>
+        </tr>
+        <tr>
+          <td>Logger</td>
+          <td>Running</td>
+          <td>Restart</td>
+        </tr>
+        <tr>
+         <td>Forwarder</td>
+         <td>Running</td>
+         <td>Restart</td>
+       </tr>
+      </tbody>
+    </table>
+    <h2>System</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Service</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>MQTT</td>
+          <td>Running</td>
+          <td>Restart</td>
+        </tr>
+      </tbody>
+    </table>
+</body>
